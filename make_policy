@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [[ $1 == "" ]]; then
+	echo $0 [modulename]
+	exit
+fi
+
+echo Making $1.pp
+
+rm $1.mod
+rm $1.pp
+
+checkmodule -M -m -o $1.mod $1.te
+
+semodule_package -m $1.mod -o $1.pp
+
+echo "# semodule -i $1.pp to install  (-r to remove, -u to update)"

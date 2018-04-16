@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -z "$1" ]]; then
+	echo "Usage: $0 {process}"
+	exit
+fi
+
+grep $1 /var/log/audit/audit* | audit2allow
