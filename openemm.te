@@ -1,4 +1,4 @@
-module openemm 3;
+module openemm 4;
 
 require {
 	type unconfined_t;
@@ -20,6 +20,7 @@ require {
 
 allow sendmail_t initrc_t:unix_stream_socket connectto;
 allow sendmail_t unconfined_t:unix_stream_socket connectto;
+allow sendmail_t ptmx_t:chr_file { read write };
 
 allow sendmail_t home_root_t:dir { read write getattr remove_name add_name };
 allow sendmail_t home_root_t:file { open read write getattr lock unlink rename create };
@@ -33,7 +34,6 @@ allow sendmail_t user_home_t:dir { read write getattr remove_name add_name };
 allow sendmail_t user_home_t:file { write getattr read lock unlink open rename create };
 allow sendmail_t user_home_t:sock_file { read write getattr };
 
-allow sendmail_t ptmx_t:chr_file { read write };
-
-allow sendmail_t user_tmp_t:dir read;
-allow sendmail_t user_tmp_t:sock_file getattr;
+allow sendmail_t user_tmp_t:dir { read write getattr remove_name add_name };
+allow sendmail_t user_tmp_t:file { write getattr read lock unlink open rename create };
+allow sendmail_t user_tmp_t:sock_file { read write getattr };

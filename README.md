@@ -12,9 +12,15 @@ https://malacandra.blogspot.co.uk/2012/06/openemm-with-selinux.html
 
 ## Quick Install
 
+First make sure the /home/openemm security context is correct. (use ls -Z to check).
+
+`# restorecon -r /home/openemm`
+
 `# yum install policycoreutils-python`
+
+Go to the downloaded policy file and compile it.
 
 `# ./make_policy openemm`
 
-`# semodule -u openemm.pp`
+`# semodule -i openemm.pp`
 
