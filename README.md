@@ -12,9 +12,9 @@ https://malacandra.blogspot.co.uk/2012/06/openemm-with-selinux.html
 
 ## Quick Install
 
-`\# yum install policycoreutils-python`
+`# yum install policycoreutils-python`
 
-`\# ./make_policy openemm`
+`# ./make_policy openemm`
 
-`\# semodule -u openemm.pp`
+`# semodule -u openemm.pp`
 
