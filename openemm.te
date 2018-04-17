@@ -4,6 +4,7 @@ require {
 	type unconfined_t;
 	type initrc_t;
 	type sendmail_t;
+	type setfiles_t;
 	type ptmx_t;
 	type home_root_t;
 	type user_tmp_t;
@@ -12,27 +13,28 @@ require {
 	class sock_file { getattr read write };
 	class dir { read write getattr remove_name add_name };
 	class file { rename open create read write getattr lock unlink };
-	class chr_file { read write };
+	class lnk_file { read write getattr };
+	class chr_file { read write getattr };
 	class unix_stream_socket connectto;
 }
 
-#============= sendmail_t ==============
+#============ setfiles_t ==============
+allow setfiles_t ptmx_t:chr_file { read write getattr };
 
+#============= sendmail_t ==============
 allow sendmail_t initrc_t:unix_stream_socket connectto;
 allow sendmail_t unconfined_t:unix_stream_socket connectto;
-allow sendmail_t ptmx_t:chr_file { read write };
-
-allow sendmail_t home_root_t:dir { read write getattr remove_name add_name };
-allow sendmail_t home_root_t:file { open read write getattr lock unlink rename create };
-allow sendmail_t home_root_t:sock_file { read write getattr };
+allow sendmail_t ptmx_t:chr_file { read write getattr };
 
 allow sendmail_t user_home_dir_t:dir { read write getattr remove_name add_name };
 allow sendmail_t user_home_dir_t:file { write getattr read lock unlink open rename create };
 allow sendmail_t user_home_dir_t:sock_file { read write getattr };
+allow sendmail_t user_home_dir_t:lnk_file { read write getattr };
 
 allow sendmail_t user_home_t:dir { read write getattr remove_name add_name };
 allow sendmail_t user_home_t:file { write getattr read lock unlink open rename create };
 allow sendmail_t user_home_t:sock_file { read write getattr };
+allow sendmail_t user_home_t:lnk_file { read write getattr };
 
 allow sendmail_t user_tmp_t:dir { read write getattr remove_name add_name };
 allow sendmail_t user_tmp_t:file { write getattr read lock unlink open rename create };
