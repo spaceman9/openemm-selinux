@@ -1,5 +1,5 @@
-# openemm-selinux
-Selinux module for OpenEMM
+# OpenEMM SELinux Module
+This is an SELinux module for OpenEMM
 
 Centos uses SELinux, which can cause some runtime issues with OpenEMM
 
