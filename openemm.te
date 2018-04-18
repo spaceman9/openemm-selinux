@@ -1,4 +1,4 @@
-module openemm 4;
+module openemm 5;
 
 require {
 	type unconfined_t;
@@ -7,12 +7,16 @@ require {
 	type setfiles_t;
 	type ptmx_t;
 	type home_root_t;
+	type home_bin_t;
 	type user_tmp_t;
 	type user_home_t;
 	type user_home_dir_t;
+	type port_t;
+	type procmail_t;
+	class tcp_socket name_connect;
 	class sock_file { getattr read write };
 	class dir { read write getattr remove_name add_name };
-	class file { rename open create read write getattr lock unlink };
+	class file { execute open execute_no_trans read write create unlink getattr rename lock };
 	class lnk_file { read write getattr };
 	class chr_file { read write getattr };
 	class unix_stream_socket connectto;
@@ -39,3 +43,13 @@ allow sendmail_t user_home_t:lnk_file { read write getattr };
 allow sendmail_t user_tmp_t:dir { read write getattr remove_name add_name };
 allow sendmail_t user_tmp_t:file { write getattr read lock unlink open rename create };
 allow sendmail_t user_tmp_t:sock_file { read write getattr };
+
+#============= procmail_t ==============
+#!!!! This avc can be allowed using the boolean 'allow_ypbind'
+
+allow procmail_t port_t:tcp_socket name_connect;
+allow procmail_t home_bin_t:lnk_file { read };
+allow procmail_t home_root_t:file { execute execute_no_trans open read write create unlink getattr };
+allow procmail_t user_tmp_t:file { open read write create unlink getattr };
+allow procmail_t user_home_t:file { execute execute_no_trans open read write create unlink getattr };
+allow procmail_t user_home_dir_t:file { execute execute_no_trans open read write create unlink getattr };
