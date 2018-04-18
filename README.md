@@ -22,5 +22,7 @@ Go to the downloaded policy file and compile it.
 
 `# ./make_policy openemm`
 
+Install the policy
+
 `# semodule -i openemm.pp`
 
